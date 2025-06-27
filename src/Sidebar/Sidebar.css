@@ -1,0 +1,32 @@
+.sidebar {
+  width:   30%;
+  height:  100%;
+  float:   left;
+  background: rgb(78, 78, 78);
+}
+
+.personal-info {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.solid-line {
+  border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.posts {
+  text-align: center;
+  
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0;
+    
+  text-align: center;
+}
