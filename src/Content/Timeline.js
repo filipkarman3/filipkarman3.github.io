@@ -118,8 +118,8 @@ function Timeline() {
         Sorry, your browser does not support canvas.
       </canvas>
 
-      <img id="tlimg" src="/img/timeline/old-blog.png" style={imgStyle(img1Pos)} ref={img1} alt="old-page.png"/>
-      <img id="tlimg" src="/img/timeline/new-blog.png" style={imgStyle(img2Pos)} ref={img2} alt="new-page.png"/>
+      <img id="tlimg" src="img/timeline/old-blog.png" style={imgStyle(img1Pos)} ref={img1} alt="old-page.png"/>
+      <img id="tlimg" src="img/timeline/new-blog.png" style={imgStyle(img2Pos)} ref={img2} alt="new-page.png"/>
     </div>
   );
 }

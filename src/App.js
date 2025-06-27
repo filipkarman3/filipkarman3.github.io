@@ -73,7 +73,7 @@ function App() {
               {/* Carousel */}
               <div style={{flex:1}}>
                 <Carousel
-                  path="/img/about-me-carousel/"
+                  path="img/about-me-carousel/"
                   n={7}
                 />
               </div>
