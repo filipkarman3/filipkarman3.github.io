@@ -17,10 +17,10 @@ function Carousel({path, n}) {
 
   // div reference for element access
   const ref = useRef(null);
-  
+
   // whether ur hovering over the div or not
   const [isHovering, setIsHovering] = useState(false);
-  
+
   // as percentage of containing div
   const imgwidth=35;
 
@@ -59,10 +59,10 @@ function Carousel({path, n}) {
     const radius = (Math.min(carousel.offsetWidth, carousel.offsetHeight) - imgwidthreal)/2;
 
     const containerRect = carousel.getBoundingClientRect();
-    
+
     // the frontmost image
     let frontmost = [-1, 0];
-    
+
     // get the frontmost image and precompute some values along the way
     const angles = [];
     const distsFromFront = [];
@@ -81,7 +81,7 @@ function Carousel({path, n}) {
       const translateList = [...prev];
 
       // reposition each image based on how much was scrolled
-      imgs.forEach((img, i) => {      
+      imgs.forEach((img, i) => {
         // resize the image unless it is the frontmost one
         const scale = (activeImg != img.id) ? 0.3 + 0.7*distsFromFront[i] : 1;
         const rect = img.getBoundingClientRect();
@@ -96,6 +96,9 @@ function Carousel({path, n}) {
     });
   }, [currentAngle]);
 
+  const [lastScrollTime, setLastScrollTime] = useState(0);
+  const scrollWaitTime = 250;
+
   //----- hook for scrolling the div -----//
   useEffect(() => {
     // handlescroll
@@ -105,14 +108,33 @@ function Carousel({path, n}) {
 
       e.preventDefault() // prevents scrolling
 
+      // not allowed to scroll for scrollwaittime after scrolling
+      if (Date.now() < lastScrollTime + scrollWaitTime) return;
+
+      // get carousel ref
+      const carousel = ref.current;
+      if (!carousel) return;
+
+      // get all images in the carousel
+      const imgs = carousel.querySelectorAll(".container");
+
+      // angle at which the images are spaced out
+      const anglePartition = Math.PI*2/imgs.length;
+
       // rotate the images
-      setCurrentAngle(prev => prev + e.deltaY*0.001);
+      if (e.deltaY > 0) {
+        setCurrentAngle(prev => prev + anglePartition);
+      } else {
+        setCurrentAngle(prev => prev - anglePartition);
+      }
+
+      setLastScrollTime(Date.now());
       rotateCarousel();
     }
 
     window.addEventListener('wheel', handleScroll, {capture:true, passive:false});
     return () => window.removeEventListener('wheel', handleScroll, {capture:true, passive:false});
-  }, [isHovering, rotateCarousel]);
+  }, [isHovering, rotateCarousel, lastScrollTime]);
 
   // height of the carousel
   const [height, setHeight] = useState(0);
@@ -144,7 +166,7 @@ function Carousel({path, n}) {
   const containerStyle = i => (i!=activeImg) ? {
     width: imgwidth+"%",
     height: "fit-content",
-    transition: "transform 0.1s ease",
+    transition: "transform 0.15s",
     position: "absolute",
     top: "0px",
     left: "0px",
@@ -154,7 +176,7 @@ function Carousel({path, n}) {
   } : {
     top: "0px",
     left: "0px",
-    transition: "transform 0.1s ease",
+    transition: "transform 0.15s",
     width: imgwidth+"%",
     transform: getTransform(i),
     backgroundColor: "white",

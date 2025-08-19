@@ -1,10 +1,3 @@
-/* KNOWN BUGS:
-  after zooming in, scrolling doesn't work for a second or two, have to scroll a bit to get it re-working
-  scrolling sometimes rotates carousel in the opposite dir
-    occurs when switching scroll dir
-  carousel goes too low sometimes because of the text
-*/
-
 import './App.css';
 import Carousel from "./Content/Carousel";
 import Timeline from "./Content/Timeline";
@@ -80,7 +73,7 @@ function App() {
             </div>
 
             <WaveTransition colortop={colorOdd} colorbottom={colorEven} />
-            
+
             {/* About this page */}
             <div className="content-box" ref={aboutPageRef} style={{background: colorEven}}>
               {/* Timeline */}
@@ -115,11 +108,11 @@ function WaveTransition({colortop, colorbottom}) {
     <div className="wave-div" style={{background:colortop}}>
       <svg viewBox="0 0 300 10" preserveAspectRatio="none" style={{width:"100%",height:"100%"}}>
         <pattern id={waveId} patternUnits="userSpaceOnUse" width="100" height="10">
-          <path 
+          <path
             d="M0,0
               C25,0 25,9 50,9
               C75,9 75,0 100,0
-              L100,10 L0,10, Z" 
+              L100,10 L0,10, Z"
             fill={colorbottom}
             strokeWidth="1"
           />
